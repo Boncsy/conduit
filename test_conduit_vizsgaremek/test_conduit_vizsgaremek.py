@@ -37,8 +37,37 @@ class TestConduit(object):
         decline_button_list = self.browser.find_elements(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--decline"]')
         assert not len(decline_button_list)
 
+# ATC002 - Regisztráció helyes adattal
+    def test_registration(self):
+        sign_up_button = self.browser.find_element(By.LINK_TEXT, 'Sign up')
+        sign_up_button.click()
 
-# ATC002 - Regisztráció helytelen email címmel
+        username_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
+        email_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
+        password_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
+
+        username_input.send_keys(user["name"])
+        email_input.send_keys(user["email"])
+        password_input.send_keys(user["password"])
+
+        sign_up_button2 = self.browser.find_element(By.XPATH,
+                                                        '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        sign_up_button2.click()
+
+        registration_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
+        assert registration_message.text == "Welcome!"
+        assert registration_problem.text == "Your registration was successful!"
+
+        registration_ok_button = self.browser.find_element(By.XPATH,
+                                                               '//button[@class="swal-button swal-button--confirm"]')
+        registration_ok_button.click()
+
+        user_profile = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
+        assert user_profile.text == user["name"]
+
+
+# ATC003 - Regisztráció helytelen email címmel
     def test_registration1(self):
         sign_up_button = self.browser.find_element(By.LINK_TEXT, 'Sign up')
         sign_up_button.click()
@@ -65,7 +94,7 @@ class TestConduit(object):
         registration_failed_button.click()
 
 
-# ATC003 - Regisztráció üres mező kitöltésekkel
+# ATC004 - Regisztráció üres mező kitöltésekkel
     def test_registration2(self):
         sign_up_button = self.browser.find_element(By.LINK_TEXT, 'Sign up')
         sign_up_button.click()
@@ -92,7 +121,7 @@ class TestConduit(object):
         registration_failed_button.click()
 
 
-# ATC003 - Bejelentkezés funkció ellenőrzése üres mező kitöltéssel
+# ATC005 - Bejelentkezés funkció ellenőrzése üres mező kitöltéssel
     def test_login1(self):
         sing_in_page_button = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
         sing_in_page_button.click()
@@ -114,7 +143,7 @@ class TestConduit(object):
         login_failed_button.click()
 
 
-# ATC004 - Bejelentkezés funkció ellenőrzése helytelen adattal (jelszó)
+# ATC006 - Bejelentkezés funkció ellenőrzése helytelen adattal (jelszó)
     def test_login2(self):
         sing_in_page_button = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
         sing_in_page_button.click()
@@ -135,7 +164,7 @@ class TestConduit(object):
         login_failed_button.click()
 
 
-# ATC005 - Bejelentkezés helyes adatokkal
+# ATC007 - Bejelentkezés helyes adatokkal
     def test_login3(self):
         sign_in_page_button = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
         sign_in_page_button.click()
@@ -152,7 +181,7 @@ class TestConduit(object):
         assert your_feed.is_displayed()
 
 
-# ATC006 - Több oldalas lista bejárása (Global Feed oldalai)
+# ATC008 - Több oldalas lista bejárása (Global Feed oldalai)
     def test_page_number(self):
         login(self.browser, user["email"], user["password"])
 
@@ -163,7 +192,7 @@ class TestConduit(object):
             assert page.text == actual_page.text
 
 
-# ATC007 - Lista bejárás / adatok listázása (tag szűrés alapján)
+# ATC009 - Lista bejárás / adatok listázása (tag szűrés alapján)
     def test_tags(self):
         login(self.browser, user["email"], user["password"])
 
@@ -174,7 +203,7 @@ class TestConduit(object):
         assert len(article_list) != 0
 
 
-# ATC008 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel)
+# ATC010 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel)
     def test_article_create1(self):
         login(self.browser, user["email"], user["password"])
 
@@ -198,7 +227,7 @@ class TestConduit(object):
         error_message_button.click()
 
 
-# ATC009 - Cikk létrehozása, új adatbevitel ellenőrzése
+# ATC011 - Cikk létrehozása, új adatbevitel ellenőrzése
     def test_article_create2(self):
         login(self.browser, user["email"], user["password"])
 
@@ -220,7 +249,7 @@ class TestConduit(object):
         new_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert new_article_title.text == article["title"]
 
-# ATC010 - Saját cikk törlésének ellenőrzése
+# ATC012 - Saját cikk törlésének ellenőrzése
     def test_article_delete(self):
         login(self.browser, user["email"], user["password"])
 
@@ -239,7 +268,7 @@ class TestConduit(object):
         assert self.browser.current_url != article_url
 
 
-# ATC011 - Komment hozzáadása, új adatbevitel ellenőrzése
+# ATC013 - Komment hozzáadása, új adatbevitel ellenőrzése
     def test_comment_create(self):
         login(self.browser, user["email"], user["password"])
 
@@ -256,7 +285,7 @@ class TestConduit(object):
         assert new_comment.is_displayed()
 
 
-# ATC012 - Komment törlése funkció ellenőrzése
+# ATC014 - Komment törlése funkció ellenőrzése
     def test_comment_delete(self):
         login(self.browser, user["email"], user["password"])
 
@@ -277,7 +306,7 @@ class TestConduit(object):
         assert comment_pieces != 0
 
 
-# ATC013 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból
+# ATC015 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból
     def test_import_data_from_file(self):
         login(self.browser, user["email"], user["password"])
 
@@ -292,7 +321,7 @@ class TestConduit(object):
                 assert new_article_title.text == row[0]
 
 
-# ATC014 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba
+# ATC016 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba
     def test_save_data_to_file(self):
         login(self.browser, user["email"], user["password"])
 
@@ -306,7 +335,7 @@ class TestConduit(object):
             assert first_row == tag_list[0].text
 
 
-# ATC015 - Kijelentkezés funkció ellenőrzése
+# ATC017 - Kijelentkezés funkció ellenőrzése
     def test_log_out(self):
         login(self.browser, user["email"], user["password"])
 

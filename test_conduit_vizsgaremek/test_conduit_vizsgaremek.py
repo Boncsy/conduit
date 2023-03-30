@@ -152,7 +152,7 @@ class TestConduit(object):
         sign_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_in_button.click()
 
-        your_feed = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        your_feed = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
         assert your_feed.is_displayed()
 
 
@@ -163,7 +163,6 @@ class TestConduit(object):
         page_numbers_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
         for page in page_numbers_list:
             page.click()
-            time.sleep(1)
             actual_page = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
             assert page.text == actual_page.text
 
@@ -172,14 +171,10 @@ class TestConduit(object):
     def test_tags(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
-
-        dolor_tag = self.browser.find_element(By.XPATH, '//div[@class="sidebar"]/div[@class="tag-list"]/a[@href="#/tag/dolor"]')
+        dolor_tag = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidebar"]/div[@class="tag-list"]/a[@href="#/tag/dolor"]')))
         dolor_tag.click()
 
-        time.sleep(2)
-
-        article_list = self.browser.find_elements(By.XPATH, '//a[@class="preview-link"]/h1')
+        article_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]/h1')))
         assert len(article_list) != 0
 
 # ATC008 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel)

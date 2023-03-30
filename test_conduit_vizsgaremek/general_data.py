@@ -1,6 +1,6 @@
 user = {
-    "name": "Teszter1",
-    "email": "teszter1@gmail.com",
+    "name": "Teszti",
+    "email": "tesztel@gmail.com",
     "password": "Password1."
 }
 

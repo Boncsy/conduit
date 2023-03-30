@@ -9,7 +9,7 @@ from general_functions import login, create_article, create_comment
 from general_data import user, article, comment
 
 class TestConduit(object):
-    def setup(self):
+    def setup_method(self):
         service = Service(executable_path=ChromeDriverManager().install())
         options = Options()
         options.add_experimental_option("detach", True)
@@ -21,7 +21,7 @@ class TestConduit(object):
         self.browser.get(URL)
         self.browser.maximize_window()
 
-    def teardown(self):
+    def teardown_method(self):
         self.browser.quit()
 
 

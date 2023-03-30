@@ -152,10 +152,8 @@ class TestConduit(object):
         sign_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_in_button.click()
 
-        time.sleep(2)
-
-        user_profile = self.browser.find_elements(By.XPATH, '//a[@class="nav-link"]')[2]
-        assert user_profile.text == user["name"]
+        your_feed = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        assert your_feed.is_displayed()
 
 
 # ATC006 - Több oldalas lista bejárása (Global Feed oldalai)

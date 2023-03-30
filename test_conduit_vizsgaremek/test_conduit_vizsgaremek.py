@@ -297,9 +297,7 @@ class TestConduit(object):
     def test_save_data_to_file(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
-
-        tag_list = self.browser.find_elements(By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')
+        tag_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
         with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\tag_list.csv', 'w') as file:
             writer = csv.writer(file)
             for tag in tag_list:

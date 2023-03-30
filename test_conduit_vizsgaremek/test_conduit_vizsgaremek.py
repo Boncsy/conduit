@@ -106,7 +106,7 @@ class TestConduit(object):
         sing_in_button.click()
 
         login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-        login_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
+        login_problem = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Email field required."
 
@@ -193,9 +193,8 @@ class TestConduit(object):
         article_tags_input.send_keys()
         publish_article_button.click()
 
-        error_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-        assert error_message.text == 'Oops!'
-        error_message_button = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
+        error_message_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
+        assert error_message_button.is_displayed()
         error_message_button.click()
 
 

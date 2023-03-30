@@ -181,14 +181,10 @@ class TestConduit(object):
     def test_article_create1(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
-
-        new_article_link = self.browser.find_element(By.XPATH, '//a[@href="#/editor"]')
+        new_article_link = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
 
-        time.sleep(2)
-
-        article_title_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Article Title"]')
+        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
         article_about_input = self.browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
         article_main_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
         article_tags_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
@@ -200,9 +196,7 @@ class TestConduit(object):
         article_tags_input.send_keys()
         publish_article_button.click()
 
-        time.sleep(2)
-
-        error_message = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
+        error_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         assert error_message.text == 'Oops!'
         error_message_button = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
         error_message_button.click()

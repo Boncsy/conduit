@@ -306,6 +306,7 @@ class TestConduit(object):
             first_row = file.readline().rstrip('\n')
             assert first_row == tag_list[0].text
 
+
 # ATC015 - Kijelentkezés funkció ellenőrzése
     def test_log_out(self):
         login(self.browser, user["email"], user["password"])

@@ -235,7 +235,7 @@ class TestConduit(object):
         time.sleep(2)
 
         article_url = self.browser.current_url
-        delete_article_button = self.browser.find_element(By.XPATH, '//i[@class="ion-trash-a"]')
+        delete_article_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_article_button.click()
 
         time.sleep(2)
@@ -251,16 +251,12 @@ class TestConduit(object):
 
         create_article(self.browser, article["title"], article["about"], article["main"], article["tags"])
 
-        time.sleep(2)
-
-        comment_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write a comment..."]')
+        comment_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
         comment_input.send_keys(comment["text"])
         post_comment_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-sm btn-primary"]')
         post_comment_button.click()
 
-        time.sleep(2)
-
-        new_comment = self.browser.find_elements(By.XPATH, '//div[@class="card"]')[0]
+        new_comment = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="card"]')))[0]
         assert new_comment.is_displayed()
 
 

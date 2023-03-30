@@ -105,9 +105,7 @@ class TestConduit(object):
         sing_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sing_in_button.click()
 
-        time.sleep(2)
-
-        login_message = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
+        login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         login_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Email field required."
@@ -128,9 +126,7 @@ class TestConduit(object):
         sing_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sing_in_button.click()
 
-        time.sleep(2)
-
-        login_message = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
+        login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         login_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Invalid user credentials."
@@ -176,6 +172,7 @@ class TestConduit(object):
 
         article_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]/h1')))
         assert len(article_list) != 0
+
 
 # ATC008 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel)
     def test_article_create1(self):
@@ -228,17 +225,17 @@ class TestConduit(object):
     def test_article_delete(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
+        time.sleep(5)
 
         create_article(self.browser, article["title"], article["about"], article["main"], article["tags"])
 
-        time.sleep(2)
+        time.sleep(5)
 
         article_url = self.browser.current_url
         delete_article_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_article_button.click()
 
-        time.sleep(2)
+        time.sleep(5)
 
         assert self.browser.current_url != article_url
 
@@ -247,7 +244,7 @@ class TestConduit(object):
     def test_comment_create(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
+        time.sleep(5)
 
         create_article(self.browser, article["title"], article["about"], article["main"], article["tags"])
 
@@ -264,25 +261,22 @@ class TestConduit(object):
     def test_comment_delete(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
+        time.sleep(5)
 
         user_article = self.browser.find_element(By.XPATH, '//a[@class="preview-link"][1]')
         user_article.click()
 
-        time.sleep(2)
+        time.sleep(5)
 
         create_comment(self.browser, comment["text"])
 
-        comments_before = self.browser.find_elements(By.XPATH, '//div[@class="card"]')
-        comment_pieces_before = len(comments_before)
-        delete_comment_button = self.browser.find_element(By.XPATH, '//i[@class="ion-trash-a"]')
+        delete_comment_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_comment_button.click()
 
-        time.sleep(2)
+        comments = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="card"]')))
+        comment_pieces = len(comments)
+        assert comment_pieces != 0
 
-        comments_after = self.browser.find_elements(By.XPATH, '//div[@class="card"]')
-        comment_pieces_after = len(comments_after)
-        assert comment_pieces_before != comment_pieces_after
 
 # ATC013 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból
     def test_import_data_from_file(self):

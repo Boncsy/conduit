@@ -282,14 +282,14 @@ class TestConduit(object):
     def test_import_data_from_file(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
+        time.sleep(5)
 
         with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\import_data.csv', 'r') as file:
             csv_reader = csv.reader(file, delimiter=';')
             for row in csv_reader:
                 create_article(self.browser, row[0], row[1], row[2], row[3])
                 time.sleep(1)
-                new_article_title = self.browser.find_element(By.XPATH, '//h1')
+                new_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
                 assert new_article_title.text == row[0]
 
 

@@ -206,14 +206,10 @@ class TestConduit(object):
     def test_article_create2(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
-
-        new_article_link = self.browser.find_element(By.XPATH, '//a[@href="#/editor"]')
+        new_article_link = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
 
-        time.sleep(2)
-
-        article_title_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Article Title"]')
+        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
         article_about_input = self.browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
         article_main_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
         article_tags_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
@@ -225,9 +221,7 @@ class TestConduit(object):
         article_tags_input.send_keys(article["tags"])
         publish_article_button.click()
 
-        time.sleep(2)
-
-        new_article_title = self.browser.find_element(By.XPATH, '//h1')
+        new_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert new_article_title.text == article["title"]
 
 # ATC010 - Saját cikk törlésének ellenőrzése

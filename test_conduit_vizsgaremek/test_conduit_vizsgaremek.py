@@ -3,6 +3,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 import time
 import csv
 from general_functions import login, create_article, create_comment
@@ -160,13 +162,11 @@ class TestConduit(object):
     def test_page_number(self):
         login(self.browser, user["email"], user["password"])
 
-        time.sleep(2)
-
-        page_numbers_list = self.browser.find_elements(By.XPATH, '//a[@class="page-link"]')
+        page_numbers_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
         for page in page_numbers_list:
             page.click()
             time.sleep(1)
-            actual_page = self.browser.find_element(By.XPATH, '//li[@class="page-item active"]')
+            actual_page = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
             assert page.text == actual_page.text
 
 

@@ -1,0 +1,17 @@
+# ATC000 - Regisztráció helyes adatokkal +
+# ATC001 - Adatkezelési tájékoztató elfogadása +
+# ATC002 - Regisztráció helytelen email címmel -
+# ATC003 - Regisztráció üres mező kitöltésekkel -
+# ATC003 - Bejelentkezés funkció ellenőrzése üres mező kitöltéssel -
+# ATC004 - Bejelentkezés funkció ellenőrzése helytelen adattal (jelszó) -
+# ATC005 - Bejelentkezés helyes adatokkal +
+# ATC006 - Több oldalas lista bejárása (Global Feed oldalai) +
+# ATC007 - Lista bejárás / adatok listázása (tag szűrés alapján) +
+# ATC008 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel) -
+# ATC009 - Cikk létrehozása, új adatbevitel ellenőrzése +
+# ATC010 - Saját cikk törlésének ellenőrzése +
+# ATC011 - Komment hozzáadása, új adatbevitel ellenőrzése +
+# ATC012 - Komment törlése funkció ellenőrzése +
+# ATC013 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból +
+# ATC014 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba +
+# ATC015 - Kijelentkezés funkció ellenőrzése +

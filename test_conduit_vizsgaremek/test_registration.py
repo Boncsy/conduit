@@ -24,7 +24,7 @@ class TestConduit(object):
         self.browser.quit()
 
 
-# ATC000 - Regisztráció helyes adattal
+# ATC002 - Regisztráció helyes adattal
     def test_registration(self):
         sign_up_button = self.browser.find_element(By.LINK_TEXT, 'Sign up')
         sign_up_button.click()

@@ -231,7 +231,7 @@ class TestConduit(object):
         time.sleep(5)
 
         article_url = self.browser.current_url
-        delete_article_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+        delete_article_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_article_button.click()
 
         time.sleep(5)

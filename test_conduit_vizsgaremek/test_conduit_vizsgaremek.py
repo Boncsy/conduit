@@ -242,14 +242,14 @@ class TestConduit(object):
         edit_article_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, "//a[@class='btn btn-sm btn-outline-secondary']//span[1]")))
         edit_article_button.click()
 
-        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-        article_title_input.clear()
-        article_title_input.send_keys("modify")
+        article_tags_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+        article_tags_input.clear()
+        article_tags_input.send_keys("modify")
         publish_article_button = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
         publish_article_button.click()
 
-        modify_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
-        assert modify_title.text == "modify"
+        modify_tag = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div[2]/div[1]/div/div[2]/a[2]')))
+        assert modify_tag.text == "modify"
 
 
 # ATC012 - Saját cikk törlésének ellenőrzése

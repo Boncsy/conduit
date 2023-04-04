@@ -1,4 +1,4 @@
-# ATC001 - Adatkezelési tájékoztató elfogadása +
+# ATC001 - Adatkezelési tájékoztató kezelése +-
 # ATC002 - Regisztráció helyes adatokkal +
 # ATC003 - Regisztráció helytelen email címmel -
 # ATC004 - Regisztráció üres mező kitöltésekkel -

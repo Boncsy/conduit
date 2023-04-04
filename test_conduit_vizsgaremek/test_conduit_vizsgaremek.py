@@ -29,8 +29,8 @@ class TestConduit(object):
 
 
 
-# ATC001 - Adatkezelési tájékoztató
-    def test_accept_cookies(self):
+# ATC001 - Adatkezelési tájékoztató kezelése
+    def test_cookies(self):
         decline_btn = self.browser.find_element(By. XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--decline']")
         decline_btn.click()
 

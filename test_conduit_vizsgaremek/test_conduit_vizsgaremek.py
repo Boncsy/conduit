@@ -38,6 +38,34 @@ class TestConduit(object):
         assert not len(decline_button_list)
 
 
+# ATC002 - Regisztráció helyes adattal
+    def test_registration(self):
+        sign_up_button = self.browser.find_element(By.LINK_TEXT, 'Sign up')
+        sign_up_button.click()
+
+        username_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
+        email_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
+        password_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
+
+        username_input.send_keys(user["name"])
+        email_input.send_keys(user["email"])
+        password_input.send_keys(user["password"])
+
+        sign_up_button2 = self.browser.find_element(By.XPATH,'//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        sign_up_button2.click()
+
+        registration_message = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
+        assert registration_message.text == "Welcome!"
+        assert registration_problem.text == "Your registration was successful!"
+
+        registration_ok_button = self.browser.find_element(By.XPATH,'//button[@class="swal-button swal-button--confirm"]')
+        registration_ok_button.click()
+
+        user_profile = WebDriverWait(self.browser, 20).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
+        assert user_profile.text == user["name"]
+
+
 # ATC003 - Regisztráció helytelen email címmel
     def test_registration1(self):
         sign_up_button = self.browser.find_element(By.LINK_TEXT, 'Sign up')

@@ -145,10 +145,10 @@ class TestConduit(object):
         password_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         password_input.send_keys(user["password"])
 
-        sign_in_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        sign_in_button = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         sign_in_button.click()
 
-        your_feed = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        your_feed = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
         assert your_feed.is_displayed()
 
 

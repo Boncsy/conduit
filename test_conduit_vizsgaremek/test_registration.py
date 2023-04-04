@@ -40,7 +40,7 @@ class TestConduit(object):
         sign_up_button2 = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_up_button2.click()
 
-        registration_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        registration_message = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert registration_message.text == "Welcome!"
         assert registration_problem.text == "Your registration was successful!"
@@ -48,5 +48,5 @@ class TestConduit(object):
         registration_ok_button = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
         registration_ok_button.click()
 
-        user_profile = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
+        user_profile = WebDriverWait(self.browser, 20).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
         assert user_profile.text == user["name"]

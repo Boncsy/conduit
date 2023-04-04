@@ -46,6 +46,6 @@ def create_article_data(browser, title_input, about_input, main_input, tag_input
 
 def create_comment(browser):
     comment_input = browser.find_element(By.XPATH, '//textarea[@placeholder="Write a comment..."]')
-    post_comment_button = WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
+    post_comment_button = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
     comment_input.send_keys("Ez egy teszt komment.")
     post_comment_button.click()

@@ -31,13 +31,24 @@ class TestConduit(object):
 
 # ATC001 - Adatkezelési tájékoztató
     def test_accept_cookies(self):
-        accept_button = self.browser.find_element(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')
-        decline_button = self.browser.find_element(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--decline"]')
-        accept_button.click()
+        decline_btn = self.browser.find_element(By. XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--decline']")
+        decline_btn.click()
 
-        time.sleep(5)
+        cookie_decline = self.browser.get_cookie("vue-cookie-accept-decline-cookie-policy-panel")
 
-        assert decline_button.is_displayed()
+        assert cookie_decline["value"] == "decline"
+
+        self.browser.delete_cookie("vue-cookie-accept-decline-cookie-policy-panel")
+        self.browser.refresh()
+        time.sleep(2)
+
+        accept_btn = self.browser.find_element(By. XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--accept']")
+        accept_btn.click()
+
+        cookie_accept = self.browser.get_cookie("vue-cookie-accept-decline-cookie-policy-panel")
+
+        assert cookie_accept["value"] == "accept"
+        time.sleep(2)
 
 
 # ATC002 - Regisztráció helyes adattal

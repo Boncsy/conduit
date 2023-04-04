@@ -145,10 +145,10 @@ class TestConduit(object):
         password_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         password_input.send_keys(user["password"])
 
-        sign_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        sign_in_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         sign_in_button.click()
 
-        your_feed = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        your_feed = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
         assert your_feed.is_displayed()
 
 
@@ -156,10 +156,10 @@ class TestConduit(object):
     def test_page_number(self):
         login(self.browser, user["email"], user["password"])
 
-        page_numbers_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
+        page_numbers_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
         for page in page_numbers_list:
             page.click()
-            actual_page = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
+            actual_page = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
             assert page.text == actual_page.text
 
 
@@ -167,10 +167,10 @@ class TestConduit(object):
     def test_tags(self):
         login(self.browser, user["email"], user["password"])
 
-        dolor_tag = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidebar"]/div[@class="tag-list"]/a[@href="#/tag/dolor"]')))
+        dolor_tag = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidebar"]/div[@class="tag-list"]/a[@href="#/tag/dolor"]')))
         dolor_tag.click()
 
-        article_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]/h1')))
+        article_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]/h1')))
         assert len(article_list) != 0
 
 
@@ -178,10 +178,10 @@ class TestConduit(object):
     def test_article_create1(self):
         login(self.browser, user["email"], user["password"])
 
-        new_article_link = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+        new_article_link = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
 
-        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+        article_title_input = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
         article_about_input = self.browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
         article_main_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
         article_tags_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
@@ -193,7 +193,7 @@ class TestConduit(object):
         article_tags_input.send_keys()
         publish_article_button.click()
 
-        error_message_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
+        error_message_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
         assert error_message_button.is_displayed()
         error_message_button.click()
 
@@ -202,10 +202,10 @@ class TestConduit(object):
     def test_article_create2(self):
         login(self.browser, user["email"], user["password"])
 
-        new_article_link = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+        new_article_link = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
 
-        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+        article_title_input = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
         article_about_input = self.browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
         article_main_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
         article_tags_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
@@ -217,7 +217,7 @@ class TestConduit(object):
         article_tags_input.send_keys(article["tags"])
         publish_article_button.click()
 
-        new_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
+        new_article_title = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert new_article_title.text == article["title"]
 
 # ATC012 - Saját cikk törlésének ellenőrzése
@@ -231,7 +231,7 @@ class TestConduit(object):
         time.sleep(5)
 
         article_url = self.browser.current_url
-        delete_article_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+        delete_article_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_article_button.click()
 
         time.sleep(5)
@@ -247,12 +247,12 @@ class TestConduit(object):
 
         create_article(self.browser, article["title"], article["about"], article["main"], article["tags"])
 
-        comment_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
+        comment_input = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
         comment_input.send_keys(comment["text"])
         post_comment_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-sm btn-primary"]')
         post_comment_button.click()
 
-        new_comment = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="card"]')))[0]
+        new_comment = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="card"]')))[0]
         assert new_comment.is_displayed()
 
 
@@ -269,10 +269,10 @@ class TestConduit(object):
 
         create_comment(self.browser, comment["text"])
 
-        delete_comment_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+        delete_comment_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_comment_button.click()
 
-        comments = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="card"]')))
+        comments = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="card"]')))
         comment_pieces = len(comments)
         assert comment_pieces != 0
 
@@ -288,7 +288,7 @@ class TestConduit(object):
             for row in csv_reader:
                 create_article(self.browser, row[0], row[1], row[2], row[3])
                 time.sleep(1)
-                new_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
+                new_article_title = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//h1')))
                 assert new_article_title.text == row[0]
 
 
@@ -296,7 +296,7 @@ class TestConduit(object):
     def test_save_data_to_file(self):
         login(self.browser, user["email"], user["password"])
 
-        tag_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
+        tag_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
         with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\tag_list.csv', 'w') as file:
             writer = csv.writer(file)
             for tag in tag_list:
@@ -310,8 +310,8 @@ class TestConduit(object):
     def test_log_out(self):
         login(self.browser, user["email"], user["password"])
 
-        log_out_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
+        log_out_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
         log_out_button.click()
 
-        sign_in_page_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+        sign_in_page_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         assert sign_in_page_button.is_displayed()

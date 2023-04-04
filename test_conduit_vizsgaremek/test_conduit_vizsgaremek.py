@@ -216,8 +216,9 @@ class TestConduit(object):
         article_tags_input.send_keys()
         publish_article_button.click()
 
-        error_message_button = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
-        assert error_message_button.is_displayed()
+        error_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        assert error_message.text == 'Oops!'
+        error_message_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
         error_message_button.click()
 
 

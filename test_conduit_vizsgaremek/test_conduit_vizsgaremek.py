@@ -304,7 +304,7 @@ class TestConduit(object):
 
         time.sleep(5)
 
-        with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\import_data.csv', 'r') as file:
+        with open('test_conduit_vizsgaremek/import_data.csv', 'r') as file:
             csv_reader = csv.reader(file, delimiter=';')
             for row in csv_reader:
                 create_article(self.browser, row[0], row[1], row[2], row[3])
@@ -318,11 +318,11 @@ class TestConduit(object):
         login(self.browser)
 
         tag_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
-        with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\tag_list.csv', 'w') as file:
+        with open('test_conduit_vizsgaremek/tag_list.csv', 'w') as file:
             writer = csv.writer(file)
             for tag in tag_list:
                 writer.writerow([tag.text])
-        with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\tag_list.csv', 'r') as file:
+        with open('test_conduit_vizsgaremek/tag_list.csv', 'r') as file:
             first_row = file.readline().rstrip('\n')
             assert first_row == tag_list[0].text
 

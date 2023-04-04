@@ -29,6 +29,20 @@ def create_article(browser):
     article_tags_input.send_keys("testtags")
     publish_article_button.click()
 
+def create_article_data(browser, title_input, about_input, main_input, tag_input):
+    new_article_button = browser.find_element(By.XPATH, '//a[@href="#/editor"]')
+    new_article_button.click()
+
+    article_title_input = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+    article_about_input = browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
+    article_main_input = browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
+    article_tags_input = browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
+    publish_article_button = browser.find_element(By.XPATH, '//button[@type="submit"]')
+    article_title_input.send_keys(title_input)
+    article_about_input.send_keys(about_input)
+    article_main_input.send_keys(main_input)
+    article_tags_input.send_keys(tag_input)
+    publish_article_button.click()
 
 def create_comment(browser):
     comment_input = browser.find_element(By.XPATH, '//textarea[@placeholder="Write a comment..."]')

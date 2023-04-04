@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 import csv
-from general_functions import login, create_article, create_comment
+from general_functions import login, create_article, create_article_data, create_comment
 from general_data import user, article, comment
 
 
@@ -307,8 +307,7 @@ class TestConduit(object):
         with open('test_conduit_vizsgaremek/import_data.csv', 'r') as file:
             csv_reader = csv.reader(file, delimiter=';')
             for row in csv_reader:
-                create_article(self.browser, row[0], row[1], row[2], row[3])
-                time.sleep(1)
+                create_article_data(self.browser, row[0], row[1], row[2], row[3])
                 new_article_title = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//h1')))
                 assert new_article_title.text == row[0]
 

@@ -33,8 +33,7 @@ class TestConduit(object):
     def test_accept_cookies(self):
         accept_button = self.browser.find_element(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')
         accept_button.click()
-        time.sleep(2)
-        decline_button_list = self.browser.find_elements(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--decline"]')
+        decline_button_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--decline"]')))
         assert not len(decline_button_list)
 
 
@@ -59,7 +58,7 @@ class TestConduit(object):
         assert registration_message.text == "Welcome!"
         assert registration_problem.text == "Your registration was successful!"
 
-        registration_ok_button = self.browser.find_element(By.XPATH,'//button[@class="swal-button swal-button--confirm"]')
+        registration_ok_button = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
         registration_ok_button.click()
 
         user_profile = WebDriverWait(self.browser, 20).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
@@ -82,9 +81,7 @@ class TestConduit(object):
         sign_up_button2 = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_up_button2.click()
 
-        time.sleep(2)
-
-        registration_message = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
+        registration_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert registration_message.text == "Registration failed!"
         assert registration_problem.text == "Email must be a valid email."
@@ -109,9 +106,7 @@ class TestConduit(object):
         sign_up_button2 = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_up_button2.click()
 
-        time.sleep(2)
-
-        registration_message = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
+        registration_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert registration_message.text == "Registration failed!"
         assert registration_problem.text == "Username field required."
@@ -133,8 +128,8 @@ class TestConduit(object):
         sing_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sing_in_button.click()
 
-        login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-        login_problem = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
+        login_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        login_problem = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Email field required."
 
@@ -154,7 +149,7 @@ class TestConduit(object):
         sing_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sing_in_button.click()
 
-        login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        login_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         login_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Invalid user credentials."
@@ -182,7 +177,7 @@ class TestConduit(object):
 
 # ATC008 - Több oldalas lista bejárása (Global Feed oldalai)
     def test_page_number(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         page_numbers_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
         for page in page_numbers_list:
@@ -193,7 +188,7 @@ class TestConduit(object):
 
 # ATC009 - Lista bejárás / adatok listázása (tag szűrés alapján)
     def test_tags(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         dolor_tag = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidebar"]/div[@class="tag-list"]/a[@href="#/tag/dolor"]')))
         dolor_tag.click()
@@ -204,7 +199,7 @@ class TestConduit(object):
 
 # ATC010 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel)
     def test_article_create1(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         new_article_link = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
@@ -228,7 +223,7 @@ class TestConduit(object):
 
 # ATC011 - Cikk létrehozása, új adatbevitel ellenőrzése
     def test_article_create2(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         new_article_link = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
@@ -250,7 +245,7 @@ class TestConduit(object):
 
 # ATC012 - Saját cikk törlésének ellenőrzése
     def test_article_delete(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         time.sleep(5)
 
@@ -269,7 +264,7 @@ class TestConduit(object):
 
 # ATC013 - Komment hozzáadása, új adatbevitel ellenőrzése
     def test_comment_create(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         time.sleep(5)
 
@@ -286,7 +281,7 @@ class TestConduit(object):
 
 # ATC014 - Komment törlése funkció ellenőrzése
     def test_comment_delete(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         time.sleep(5)
 
@@ -307,7 +302,7 @@ class TestConduit(object):
 
 # ATC015 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból
     def test_import_data_from_file(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         time.sleep(5)
 
@@ -322,7 +317,7 @@ class TestConduit(object):
 
 # ATC016 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba
     def test_save_data_to_file(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         tag_list = WebDriverWait(self.browser, 10).until(EC.presence_of_all_elements_located((By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
         with open('C:\\Users\\kohar\\PycharmProjects\\conduit\\test_conduit_vizsgaremek\\tag_list.csv', 'w') as file:
@@ -336,7 +331,7 @@ class TestConduit(object):
 
 # ATC017 - Kijelentkezés funkció ellenőrzése
     def test_log_out(self):
-        login(self.browser, user["email"], user["password"])
+        login(self.browser)
 
         log_out_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
         log_out_button.click()

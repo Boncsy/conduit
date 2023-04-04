@@ -2,18 +2,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
-def login(browser, user_email, user_password):
+def login(browser):
     sign_in_page_button = browser.find_element(By.XPATH, '//a[@href="#/login"]')
     sign_in_page_button.click()
 
     email_input = browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-    email_input.send_keys(user_email)
+    email_input.send_keys("tesztel@gmail.com")
     password_input = browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
-    password_input.send_keys(user_password)
+    password_input.send_keys("Password1.")
 
-    sign_in_button = WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+    sign_in_button = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     sign_in_button.click()
-
 
 def create_article(browser, title_input, about_input, main_input, tag_input):
     new_article_button = browser.find_element(By.XPATH, '//a[@href="#/editor"]')

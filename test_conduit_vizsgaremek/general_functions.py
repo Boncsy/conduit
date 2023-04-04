@@ -13,6 +13,7 @@ def login(browser):
 
     sign_in_button = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     sign_in_button.click()
+    time.sleep(5)
 
 def create_article(browser):
     new_article_button = browser.find_element(By.XPATH, '//a[@href="#/editor"]')

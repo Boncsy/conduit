@@ -248,7 +248,7 @@ class TestConduit(object):
         publish_article_button = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
         publish_article_button.click()
 
-        modify_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div[1]')))
+        modify_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert modify_title.text == "modify"
 
 

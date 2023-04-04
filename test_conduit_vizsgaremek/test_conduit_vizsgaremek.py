@@ -210,41 +210,16 @@ class TestConduit(object):
         assert len(article_list) != 0
 
 
-# ATC010 - Cikk létrehozása helytelen mező kitöltéssel (üres mezőkkel)
+# ATC010 - Cikk létrehozása, új adatbevitel ellenőrzése
     def test_article_create1(self):
         login(self.browser)
-
         new_article_link = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_link.click()
 
         article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
         article_about_input = self.browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
-        article_main_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
-        article_tags_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
-        publish_article_button = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
-
-        article_title_input.send_keys()
-        article_about_input.send_keys()
-        article_main_input.send_keys()
-        article_tags_input.send_keys()
-        publish_article_button.click()
-
-        error_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-        assert error_message.text == 'Oops!'
-        error_message_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
-        error_message_button.click()
-
-
-# ATC011 - Cikk létrehozása, új adatbevitel ellenőrzése
-    def test_article_create2(self):
-        login(self.browser)
-
-        new_article_link = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
-        new_article_link.click()
-
-        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-        article_about_input = self.browser.find_element(By.XPATH, '//input[starts-with(@placeholder,"What")]')
-        article_main_input = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
+        article_main_input = self.browser.find_element(By.XPATH,
+                                                           '//textarea[@placeholder="Write your article (in markdown)"]')
         article_tags_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
         publish_article_button = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
 
@@ -256,6 +231,24 @@ class TestConduit(object):
 
         new_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert new_article_title.text == article["title"]
+
+
+# ATC011 - Cikk létrehozása, adatok módosítása
+    def test_article_modify(self):
+        login(self.browser)
+
+        create_article(self.browser)
+
+        edit_article_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, "//a[@class='btn btn-sm btn-outline-secondary']//span[1]")))
+        edit_article_button.click()
+
+        article_title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+        article_title_input.send_keys("modify")
+        publish_article_button = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
+        publish_article_button.click()
+
+        modify_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div[2]')))
+        assert modify_title.text == "modify"
 
 # ATC012 - Saját cikk törlésének ellenőrzése
     def test_article_delete(self):

@@ -53,7 +53,7 @@ class TestConduit(object):
         sign_up_button2 = self.browser.find_element(By.XPATH,'//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_up_button2.click()
 
-        registration_message = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        registration_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert registration_message.text == "Welcome!"
         assert registration_problem.text == "Your registration was successful!"
@@ -61,7 +61,7 @@ class TestConduit(object):
         registration_ok_button = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
         registration_ok_button.click()
 
-        user_profile = WebDriverWait(self.browser, 20).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
+        user_profile = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
         assert user_profile.text == user["name"]
 
 
@@ -81,7 +81,7 @@ class TestConduit(object):
         sign_up_button2 = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_up_button2.click()
 
-        registration_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        registration_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert registration_message.text == "Registration failed!"
         assert registration_problem.text == "Email must be a valid email."
@@ -106,7 +106,7 @@ class TestConduit(object):
         sign_up_button2 = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sign_up_button2.click()
 
-        registration_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        registration_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         registration_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert registration_message.text == "Registration failed!"
         assert registration_problem.text == "Username field required."
@@ -128,8 +128,8 @@ class TestConduit(object):
         sing_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sing_in_button.click()
 
-        login_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-        login_problem = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
+        login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        login_problem = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Email field required."
 
@@ -149,7 +149,7 @@ class TestConduit(object):
         sing_in_button = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         sing_in_button.click()
 
-        login_message = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        login_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
         login_problem = self.browser.find_element(By.XPATH, '//div[@class="swal-text"]')
         assert login_message.text == "Login failed!"
         assert login_problem.text == "Invalid user credentials."
@@ -168,10 +168,10 @@ class TestConduit(object):
         password_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         password_input.send_keys(user["password"])
 
-        sign_in_button = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        sign_in_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         sign_in_button.click()
 
-        your_feed = WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        your_feed = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
         assert your_feed.is_displayed()
 
 
@@ -249,7 +249,7 @@ class TestConduit(object):
 
         time.sleep(5)
 
-        create_article(self.browser, article["title"], article["about"], article["main"], article["tags"])
+        create_article(self.browser)
 
         time.sleep(5)
 
@@ -268,7 +268,7 @@ class TestConduit(object):
 
         time.sleep(5)
 
-        create_article(self.browser, article["title"], article["about"], article["main"], article["tags"])
+        create_article(self.browser)
 
         comment_input = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
         comment_input.send_keys(comment["text"])
@@ -283,14 +283,12 @@ class TestConduit(object):
     def test_comment_delete(self):
         login(self.browser)
 
-        time.sleep(5)
-
-        user_article = self.browser.find_element(By.XPATH, '//a[@class="preview-link"][1]')
+        user_article = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@class="preview-link"][1]')))
         user_article.click()
 
         time.sleep(5)
 
-        create_comment(self.browser, comment["text"])
+        create_comment(self.browser)
 
         delete_comment_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_comment_button.click()

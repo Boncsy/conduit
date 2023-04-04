@@ -5,9 +5,9 @@ user = {
 }
 
 article = {
-    "title": "Ide kerül a címe a cikknek.",
+    "title": "Ide kerül a címe a cikknek",
     "about": "Ide írjuk, hogy miről fog szólni a cikk",
-    "main": "Ide írjuk magának a cikknek a tartalmát.",
+    "main": "Ide írjuk magának a cikknek a tartalmát",
     "tags": "testtags"
 }
 

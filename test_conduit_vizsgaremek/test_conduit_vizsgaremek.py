@@ -31,10 +31,13 @@ class TestConduit(object):
 
 # ATC001 - Adatkezelési tájékoztató
     def test_accept_cookies(self):
-        accept_button = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
+        accept_button = self.browser.find_element(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')
+        decline_button = self.browser.find_element(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--decline"]')
         accept_button.click()
-        decline_button_list = WebDriverWait(self.browser, 20).until(EC.presence_of_all_elements_located((By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--decline"]')))
-        assert not len(decline_button_list)
+
+        time.sleep(5)
+
+        assert decline_button.is_displayed()
 
 
 # ATC002 - Regisztráció helyes adattal

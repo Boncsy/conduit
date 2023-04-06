@@ -233,11 +233,7 @@ class TestConduit(object):
         assert new_article_title.text == article["title"]
 
 
-# ATC011 - Cikk létrehozása, adatok módosítása
-
-
-
-# ATC012 - Saját cikk törlésének ellenőrzése
+# ATC011 - Saját cikk törlésének ellenőrzése
     def test_article_delete(self):
         login(self.browser)
 
@@ -252,7 +248,7 @@ class TestConduit(object):
         assert self.browser.current_url != article_url
 
 
-# ATC013 - Komment hozzáadása, új adatbevitel ellenőrzése
+# ATC012 - Komment hozzáadása, új adatbevitel ellenőrzése
     def test_comment_create(self):
         login(self.browser)
 
@@ -267,7 +263,7 @@ class TestConduit(object):
         assert new_comment.is_displayed()
 
 
-# ATC014 - Komment törlése funkció ellenőrzése
+# ATC013 - Komment törlése funkció ellenőrzése
     def test_comment_delete(self):
         login(self.browser)
 
@@ -286,7 +282,7 @@ class TestConduit(object):
         assert comment_pieces != 0
 
 
-# ATC015 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból
+# ATC014 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból
     def test_import_data_from_file(self):
         login(self.browser)
 
@@ -298,7 +294,7 @@ class TestConduit(object):
                 assert new_article_title.text == row[0]
 
 
-# ATC016 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba
+# ATC015 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba
     def test_save_data_to_file(self):
         login(self.browser)
 
@@ -312,7 +308,7 @@ class TestConduit(object):
             assert first_row == tag_list[0].text
 
 
-# ATC017 - Kijelentkezés funkció ellenőrzése
+# ATC016 - Kijelentkezés funkció ellenőrzése
     def test_log_out(self):
         login(self.browser)
 

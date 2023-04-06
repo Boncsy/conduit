@@ -8,10 +8,9 @@
 # ATC008 - Több oldalas lista bejárása (Global Feed oldalai) +
 # ATC009 - Lista bejárás / adatok listázása (tag szűrés alapján) +
 # ATC010 - Cikk létrehozása, új adatbevitel ellenőrzése +
-# ATC011 - Cikk létrehozása, adatok módosítása
-# ATC012 - Saját cikk törlésének ellenőrzése +
-# ATC013 - Komment hozzáadása, új adatbevitel ellenőrzése +
-# ATC014 - Komment törlése funkció ellenőrzése +
-# ATC015 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból +
-# ATC016 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba +
-# ATC017 - Kijelentkezés funkció ellenőrzése +
+# ATC011 - Saját cikk törlésének ellenőrzése +
+# ATC012 - Komment hozzáadása, új adatbevitel ellenőrzése +
+# ATC013 - Komment törlése funkció ellenőrzése +
+# ATC014 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból +
+# ATC015 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba +
+# ATC016 - Kijelentkezés funkció ellenőrzése +

@@ -31,7 +31,7 @@ class TestConduit(object):
 
 # ATC001 - Adatkezelési tájékoztató kezelése
     def test_cookies(self):
-        decline_btn = self.browser.find_element(By. XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--decline']")
+        decline_btn = self.browser.find_element(By.XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--decline']")
         decline_btn.click()
 
         cookie_decline = self.browser.get_cookie("vue-cookie-accept-decline-cookie-policy-panel")
@@ -41,7 +41,7 @@ class TestConduit(object):
         self.browser.delete_cookie("vue-cookie-accept-decline-cookie-policy-panel")
         self.browser.refresh()
 
-        accept_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By. XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--accept']")))
+        accept_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--accept']")))
         accept_btn.click()
 
         cookie_accept = self.browser.get_cookie("vue-cookie-accept-decline-cookie-policy-panel")
@@ -298,7 +298,7 @@ class TestConduit(object):
     def test_save_data_to_file(self):
         login(self.browser)
 
-        tag_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By. XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
+        tag_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="sidebar"]/div/a[@class="tag-pill tag-default"]')))
         with open('test_conduit_vizsgaremek/tag_list.csv', 'w') as file:
             writer = csv.writer(file)
             for tag in tag_list:
@@ -307,8 +307,28 @@ class TestConduit(object):
             first_row = file.readline().rstrip('\n')
             assert first_row == tag_list[0].text
 
+# ATC016 - Meglévő adat módosítása, profil adat módosítás (username)
+    def test_name_modifie(self):
+        login(self.browser)
 
-# ATC016 - Kijelentkezés funkció ellenőrzése
+        settings_button = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[1]
+        settings_button.click()
+
+        username_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Your username"]')))
+        username_input.clear()
+        username_input.send_keys('New')
+
+        update_settings_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        update_settings_button.click()
+
+        update_successful_button = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
+        update_successful_button.click()
+
+        user_profile = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
+        assert user_profile.text == "New"
+
+
+# ATC017 - Kijelentkezés funkció ellenőrzése
     def test_log_out(self):
         login(self.browser)
 

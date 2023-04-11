@@ -13,4 +13,5 @@
 # ATC013 - Komment törlése funkció ellenőrzése +
 # ATC014 - Cikk létrehozása / ismételt és sorozatos adatbevitel adatforrásból +
 # ATC015 - Címkék kimentése az oldalról / adatok lementése a felületről csv fájlba +
-# ATC016 - Kijelentkezés funkció ellenőrzése +
+# ATC016 - Meglévő adat módosítása, profil adat módosítás (username) +
+# ATC017 - Kijelentkezés funkció ellenőrzése +
